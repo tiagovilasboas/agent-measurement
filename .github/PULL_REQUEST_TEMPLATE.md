@@ -8,6 +8,7 @@
 
 - [ ] Suite / cases / rubric
 - [ ] Sample report and/or dry-run docs / optional CI (if this PR is Stage 1+)
+- [ ] Adapter stub / EXAMPLE live report (if this PR is Stage 2+)
 
 ## How to verify
 
@@ -15,7 +16,7 @@
 ./scripts/run.sh tool-use
 ```
 
-<!-- Replace tool-use with the suite id you changed. Success: reports/<suite>-<date>.md is written; unknown ids exit 1. -->
+<!-- Replace tool-use with the suite id you changed. Success: reports/<suite>-<date>.md is written (tool-use includes echo trajectories); unknown ids/adapters exit 1. -->
 
 ## Done
 

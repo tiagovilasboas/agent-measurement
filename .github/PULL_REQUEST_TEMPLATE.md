@@ -6,7 +6,8 @@
 
 <!-- Files and instances touched. Suite id if adding/changing a suite. -->
 
-- [ ] Suite / cases / rubric only (no filled sample report, adapter, or extra harness)
+- [ ] Suite / cases / rubric
+- [ ] Sample report and/or dry-run docs / optional CI (if this PR is Stage 1+)
 
 ## How to verify
 
@@ -22,3 +23,4 @@
 - [ ] Rubric names the metric and incompleteness
 - [ ] Dry-run command above succeeds
 - [ ] README suite table updated if a suite was added
+- [ ] Sample reports (if any) have instance-level rows + incompleteness

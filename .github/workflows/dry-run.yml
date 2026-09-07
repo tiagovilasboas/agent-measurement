@@ -10,7 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Dry-run tool-use suite
-        run: ./scripts/run.sh tool-use
+        run: |
+          ./scripts/run.sh tool-use
+          report="reports/tool-use-$(date -u +%Y-%m-%d).md"
+          grep -q "adapter: echo" "$report"
+          grep -q '"calls"' "$report"
       - name: Unknown suite exits 1
         run: |
           set +e

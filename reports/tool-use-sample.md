@@ -1,5 +1,7 @@
 # Report: tool-use (sample)
 
+Stage 1 scaffold example (3 instances, no adapter traces). For the Stage 2 EXAMPLE live fill (`echo` stub + instance 4), see [tool-use-live.example.md](tool-use-live.example.md).
+
 | Field | Value |
 |---|---|
 | **Date** | 2026-09-07 (illustrative) |

@@ -1,0 +1,70 @@
+name: Add suite
+description: Propose a tiny measurement suite (cases + rubric). No filled report or adapter.
+title: "suite: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Propose a suite in the Inspect sense: **cases** (dataset) + **rubric** (scorer).
+        Each case is a SWE-bench-style **instance** (given → expected → checkable).
+        Tool-use suites follow BFCL (exact name, required args, withhold).
+        HELM: name the metric and what this suite does **not** cover.
+
+        Do not attach a filled sample report or an adapter in this issue.
+
+  - type: input
+    id: suite-id
+    attributes:
+      label: Suite id
+      description: kebab-case directory name under suites/
+      placeholder: tool-use
+    validations:
+      required: true
+
+  - type: textarea
+    id: measures
+    attributes:
+      label: What does this suite measure?
+      description: One or two sentences. The minimum metric must be explicit (usually pass/fail per instance).
+      placeholder: Agent calls the correct tool and only that tool.
+    validations:
+      required: true
+
+  - type: textarea
+    id: cases
+    attributes:
+      label: Cases (instances)
+      description: Numbered given / expected / fail modes. A handful is enough.
+      placeholder: |
+        1. Given: … Expected: … Fail if: …
+        2. Given: … Expected: … Fail if: …
+    validations:
+      required: true
+
+  - type: textarea
+    id: rubric
+    attributes:
+      label: Rubric (scorer)
+      description: Pass, fail, named metric, and incompleteness (what you will not score).
+    validations:
+      required: true
+
+  - type: textarea
+    id: incompleteness
+    attributes:
+      label: Out of scope
+      description: HELM-style recognition of incompleteness (latency, cost, multi-turn, other tools, …).
+      placeholder: Does not measure latency, cost, or multi-turn repair.
+    validations:
+      required: true
+
+  - type: textarea
+    id: verify
+    attributes:
+      label: How to verify after the PR
+      description: Dry-run command you will run. Keep it in a fence in the PR.
+      value: |
+        ./scripts/run.sh <suite-id>
+    validations:
+      required: true

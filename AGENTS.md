@@ -5,10 +5,12 @@ Thin map for coding agents. Humans: [CONTRIBUTING.md](CONTRIBUTING.md).
 ## Suites layout
 
 ```
-suites/<suite-id>/cases.md   # dataset (instances)
-suites/<suite-id>/rubric.md  # scorer (pass/fail + incompleteness)
-scripts/run.sh               # dry-run harness → reports/<suite-id>-<date>.md
-reports/tool-use-sample.md   # filled example (Stage 1)
+suites/<suite-id>/cases.md           # dataset (instances)
+suites/<suite-id>/rubric.md          # scorer (pass/fail + incompleteness)
+adapters/echo.sh                     # default solver stub (no API key)
+scripts/run.sh                       # cases → adapter → reports/<suite-id>-<date>.md
+reports/tool-use-live.example.md     # EXAMPLE filled live-style report (Stage 2)
+reports/tool-use-sample.md           # Stage 1 scaffold example
 ```
 
 Existing ids: `tool-use`, `rag-vs-mcp`, `appsec-prompt`.
@@ -17,9 +19,10 @@ Existing ids: `tool-use`, `rag-vs-mcp`, `appsec-prompt`.
 
 ```bash
 ./scripts/run.sh tool-use
+# ADAPTER=echo ./scripts/run.sh tool-use   # same default
 ```
 
-Writes a markdown scaffold. Does not call a model. Unknown suite → exit 1.
+Writes rubric + cases + adapter trajectories. Does not call a paid model. Unknown suite or adapter → exit 1.
 
 Optional CI: `.github/workflows/dry-run.yml`.
 
@@ -37,3 +40,4 @@ Optional CI: `.github/workflows/dry-run.yml`.
 - Do not score from agent prose alone (`appsec-prompt` needs `path:line`).
 - Do not commit to `main`; open a PR.
 - Do not treat a headline % without instance rows as a report.
+- Do not invent live prod metrics; label EXAMPLE / sample numbers as such.

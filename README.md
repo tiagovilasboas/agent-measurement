@@ -28,11 +28,11 @@ Maintainer: [Tiago Montanha](https://github.com/tiagovilasboas) · Staff · Agen
 ./scripts/run.sh tool-use
 ```
 
-Writes `reports/tool-use-<YYYY-MM-DD>.md` with Rubric, Cases, and an empty Results table. **Does not call a model.** Unknown suite id → exit 1.
+Default solver is [`adapters/echo.sh`](adapters/echo.sh) — script stub, **no API key**, not a model. Writes `reports/tool-use-<YYYY-MM-DD>.md` with rubric, cases, and echo trajectories. Unknown suite or adapter → exit 1. Swap later: `ADAPTER=your-stub ./scripts/run.sh tool-use`.
 
-Filled example (instance-level pass/fail + incompleteness): [reports/tool-use-sample.md](reports/tool-use-sample.md).
+Worked EXAMPLE fill (labeled sample numbers, not prod): [reports/tool-use-live.example.md](reports/tool-use-live.example.md). Stage 1 scaffold: [reports/tool-use-sample.md](reports/tool-use-sample.md).
 
-Each suite has `suites/<nome>/cases.md` (instances) and `suites/<nome>/rubric.md` (scorer).
+Each suite has `suites/<nome>/cases.md` (instances) and `suites/<nome>/rubric.md` (scorer). Adapter contract: [adapters/README.md](adapters/README.md).
 
 Optional CI: [`.github/workflows/dry-run.yml`](.github/workflows/dry-run.yml) runs the same command on push/PR.
 

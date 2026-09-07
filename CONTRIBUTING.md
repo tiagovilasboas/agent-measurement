@@ -15,8 +15,9 @@ Quality bar (layout and reporting only; we do not vendor these harnesses):
 suites/<suite-id>/
   cases.md    # dataset — numbered instances
   rubric.md   # scorer — pass/fail (or the named metric) and fail modes
+adapters/     # solver stubs (`echo.sh` by default — no API key)
 scripts/run.sh
-reports/      # markdown scaffold from a dry-run; fill after a real agent run
+reports/      # dry-run output + EXAMPLE fills (not prod metrics)
 ```
 
 `<suite-id>` is kebab-case (`tool-use`, `rag-vs-mcp`, `appsec-prompt`).
@@ -28,7 +29,7 @@ reports/      # markdown scaffold from a dry-run; fill after a real agent run
 3. Dry-run the new id (see below).
 4. Open a PR using `.github/PULL_REQUEST_TEMPLATE.md`. Use the [Add suite](/.github/ISSUE_TEMPLATE/add-suite.yml) issue form when you want discussion first.
 
-A suite stays **tiny**: a handful of instances, one explicit metric, no adapter code in this stage.
+A suite stays **tiny**: a handful of instances, one explicit metric. The default adapter is the in-repo `echo` stub; adapters that call a paid model stay out of this repo unless they are key-free stubs.
 
 ## Add a case
 
@@ -54,13 +55,13 @@ Keep scoring deterministic. Do not hide extra credit in the notes column.
 
 ## Dry-run
 
-The runner writes a report scaffold. It does **not** call a model.
+The runner writes a report scaffold via `adapters/${ADAPTER:-echo}.sh`. It does **not** call a paid model.
 
 ```bash
 ./scripts/run.sh tool-use
 ```
 
-Replace `tool-use` with any suite id. Success: `Wrote reports/<suite-id>-<YYYY-MM-DD>.md` containing Rubric, Cases, and an empty Results table.
+Replace `tool-use` with any suite id. Success: `Wrote reports/<suite-id>-<YYYY-MM-DD>.md` containing Rubric, Cases, adapter trajectories (tool-use), and an empty Results table.
 
 Unknown suite:
 
@@ -69,9 +70,9 @@ Unknown suite:
 # exits 1: Unknown suite: not-a-suite
 ```
 
-Filled example (Stage 1): [reports/tool-use-sample.md](reports/tool-use-sample.md). Optional CI: [`.github/workflows/dry-run.yml`](.github/workflows/dry-run.yml).
+EXAMPLE live fill (Stage 2, labeled sample numbers): [reports/tool-use-live.example.md](reports/tool-use-live.example.md). Stage 1 scaffold: [reports/tool-use-sample.md](reports/tool-use-sample.md). Optional CI: [`.github/workflows/dry-run.yml`](.github/workflows/dry-run.yml).
 
-Do not commit dated dry-run scaffolds from local runs unless they are intentional samples. Adapters that call a model remain a later stage.
+Do not commit dated dry-run scaffolds from local runs unless they are intentional samples. Do not present EXAMPLE rows as production metrics.
 
 ## Report discipline
 
@@ -91,3 +92,4 @@ State model, harness, and date in the report header when you fill it. A headline
 - [ ] Dry-run succeeds (`./scripts/run.sh <suite-id>`)
 - [ ] README suite table updated if a suite was added
 - [ ] Sample reports (if any) keep instance-level rows + incompleteness notes
+- [ ] EXAMPLE / sample numbers are labeled; not presented as prod metrics

@@ -43,6 +43,10 @@ Cada suite tem `suites/<nome>/cases.md` (casos) e `suites/<nome>/rubric.md` (com
 
 Related: [awesome-agentic-ai](https://github.com/tiagovilasboas/awesome-agentic-ai) · [agentic-code-review](https://github.com/tiagovilasboas/agentic-code-review)
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Agent notes: [AGENTS.md](AGENTS.md).
+
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE).

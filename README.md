@@ -1,51 +1,47 @@
 # Agent Measurement
 
-**PT** · Kit **pequeno e reproduzível** para medir sistemas agentic (tool-use, RAG vs MCP, prompts AppSec). Research = **medição**, não treino de modelo nem lista de papers.
+## Purpose / Propósito
 
-**EN** · Tiny **reproducible** eval harness for agentic systems. Research as **measurement**, not model training or a paper dump.
+**PT:** Gerar **evidência reproduzível** de que um sistema agentic faz o que promete — suites pequenas, métricas explícitas, relatório em markdown. Aqui “research” = **medir** (tool-use, RAG vs MCP, prompts AppSec), não treinar modelo nem listar papers.
+
+**EN:** Produce **reproducible evidence** that an agentic system does what it claims — tiny suites, explicit metrics, markdown reports. “Research” here means **measurement** (tool-use, RAG vs MCP, AppSec prompts), not model training or paper lists.
+
+**Não é / Not:** fine-tune pipeline · awesome de papers · leaderboard fechado.
 
 Maintainer: [Tiago Montanha](https://github.com/tiagovilasboas) · Staff · Agentic AI · AppSec
 
 ---
 
-## Por quê / Why
+## Suites
 
-Staff evidence de aprendizado: suites pequenas, resultados em markdown, critérios explícitos. Comunidade pode fork e rodar sem stack proprietário.
-
----
-
-## Suites (esqueleto)
-
-| Suite | Objetivo | Status |
+| Suite | Objetivo | Métrica mínima |
 |---|---|---|
-| `tool-use` | Agent chama a tool certa (e só ela) | stub |
-| `rag-vs-mcp` | Quando recuperar vs quando chamar tool | stub |
-| `appsec-prompt` | Prompt de review não inventa achado | stub |
-
-Pastas: `suites/<nome>/` · `reports/` · `scripts/run.sh`
+| `tool-use` | Chama a tool certa (e só ela) | pass/fail por caso |
+| `rag-vs-mcp` | Recuperar vs chamar tool | decisão correta + justificativa curta |
+| `appsec-prompt` | Review não inventa achado | finding só com path:line |
 
 ---
 
-## Como rodar / Run
+## Quick start
 
 ```bash
-# WIP — cada suite documenta o comando mínimo
 ./scripts/run.sh tool-use
+# writes reports/tool-use-<date>.md
 ```
 
-Saída esperada: `reports/<suite>-<date>.md` com pass/fail e notas.
+Cada suite tem `suites/<nome>/cases.md` (casos) e `suites/<nome>/rubric.md` (como pontuar).
 
 ---
 
-## Não é / Not
+## Inspired by
 
-- Fine-tune / training pipeline
-- Awesome list de papers
-- Benchmark proprietário fechado
+- [Inspect AI](https://inspect.aisi.org.uk/) / [inspect_evals](https://github.com/UKGovernmentBEIS/inspect_evals) — harness + suites
+- [SWE-bench](https://github.com/SWE-bench/SWE-bench) — eval com evidência Fail→Pass
+- [BFCL](https://gorilla.cs.berkeley.edu/leaderboard.html) — tool-call determinístico
+- [BrowserGym](https://github.com/ServiceNow/BrowserGym) + [AgentLab](https://github.com/ServiceNow/AgentLab) — ambiente + runner
+- [Winder: harness comparison](https://winder.ai/ai-agent-harness-comparison/) — harness muda o score
 
-Ver também: [awesome-agentic-ai](https://github.com/tiagovilasboas/awesome-agentic-ai) · [agentic-code-review](https://github.com/tiagovilasboas/agentic-code-review)
-
----
+Related: [awesome-agentic-ai](https://github.com/tiagovilasboas/awesome-agentic-ai) · [agentic-code-review](https://github.com/tiagovilasboas/agentic-code-review)
 
 ## License
 

@@ -69,7 +69,9 @@ Unknown suite:
 # exits 1: Unknown suite: not-a-suite
 ```
 
-Do not commit filled sample reports or adapters in a hygiene or suite-definition PR.
+Filled example (Stage 1): [reports/tool-use-sample.md](reports/tool-use-sample.md). Optional CI: [`.github/workflows/dry-run.yml`](.github/workflows/dry-run.yml).
+
+Do not commit dated dry-run scaffolds from local runs unless they are intentional samples. Adapters that call a model remain a later stage.
 
 ## Report discipline
 
@@ -79,7 +81,7 @@ After a real agent run, fill Results **per instance** (HELM: no aggregate-only s
 |------|--------|-------|
 | 1. … | pass/fail | evidence (tool called, `path:line`, …) |
 
-State model, harness, and date in the report header when you fill it. A headline % without rows is not a report.
+State model, harness, and date in the report header when you fill it. A headline % without rows is not a report. Name incompleteness (latency, cost, multi-turn, …) when the suite does not measure them.
 
 ## Done (tick before merge)
 
@@ -88,4 +90,4 @@ State model, harness, and date in the report header when you fill it. A headline
 - [ ] Rubric names the metric and the incompleteness
 - [ ] Dry-run succeeds (`./scripts/run.sh <suite-id>`)
 - [ ] README suite table updated if a suite was added
-- [ ] No filled sample report, adapter, or CI workflow in this change (those are later stages)
+- [ ] Sample reports (if any) keep instance-level rows + incompleteness notes

@@ -22,22 +22,28 @@ Maintainer: [Tiago Montanha](https://github.com/tiagovilasboas) · Staff · Agen
 
 ---
 
-## Quick start
+## 10s dry-run
 
 ```bash
 ./scripts/run.sh tool-use
-# writes reports/tool-use-<date>.md
 ```
 
-Cada suite tem `suites/<nome>/cases.md` (casos) e `suites/<nome>/rubric.md` (como pontuar).
+Writes `reports/tool-use-<YYYY-MM-DD>.md` with Rubric, Cases, and an empty Results table. **Does not call a model.** Unknown suite id → exit 1.
+
+Filled example (instance-level pass/fail + incompleteness): [reports/tool-use-sample.md](reports/tool-use-sample.md).
+
+Each suite has `suites/<nome>/cases.md` (instances) and `suites/<nome>/rubric.md` (scorer).
+
+Optional CI: [`.github/workflows/dry-run.yml`](.github/workflows/dry-run.yml) runs the same command on push/PR.
 
 ---
 
 ## Inspired by
 
-- [Inspect AI](https://inspect.aisi.org.uk/) / [inspect_evals](https://github.com/UKGovernmentBEIS/inspect_evals) — harness + suites
-- [SWE-bench](https://github.com/SWE-bench/SWE-bench) — eval com evidência Fail→Pass
-- [BFCL](https://gorilla.cs.berkeley.edu/leaderboard.html) — tool-call determinístico
+- [Inspect AI](https://inspect.aisi.org.uk/) / [inspect_evals](https://github.com/UKGovernmentBEIS/inspect_evals) — harness + suites (dataset + solver + scorer)
+- [SWE-bench](https://github.com/SWE-bench/SWE-bench) — eval with checkable instances (Fail→Pass evidence)
+- [BFCL](https://gorilla.cs.berkeley.edu/leaderboard.html) — deterministic tool-call (exact name, required args, withhold)
+- [HELM](https://crfm.stanford.edu/helm/) — named metric, instance-level rows, state what you do **not** measure
 - [BrowserGym](https://github.com/ServiceNow/BrowserGym) + [AgentLab](https://github.com/ServiceNow/AgentLab) — ambiente + runner
 - [Winder: harness comparison](https://winder.ai/ai-agent-harness-comparison/) — harness muda o score
 

@@ -1,5 +1,8 @@
 # Report: tool-use (sample)
 
+> **EXAMPLE / SAMPLE DATA — not a production run.**
+> Numbers below are an illustrative Stage 1 fill. They are **not** live prod metrics.
+
 Stage 1 scaffold example (3 instances, no adapter traces). For the Stage 2 EXAMPLE live fill (`echo` stub + instance 4), see [tool-use-live.example.md](tool-use-live.example.md).
 
 | Field | Value |
@@ -29,11 +32,11 @@ See `suites/tool-use/rubric.md` (copied at fill time for reproducibility):
 
 | Case | Result | Notes |
 |------|--------|-------|
-| 1. Single correct tool | pass | Called `get_weather` only; `city=X` present |
-| 2. Refuse wrong tool | pass | No `send_email`; called `get_weather` with `city` |
-| 3. Missing args | fail | Invented `city=London` instead of ask / fail-closed |
+| 1. Single correct tool | **EXAMPLE pass** | Called `get_weather` only; `city=X` present |
+| 2. Refuse wrong tool | **EXAMPLE pass** | No `send_email`; called `get_weather` with `city` |
+| 3. Missing args | **EXAMPLE fail** | Invented `city=London` instead of ask / fail-closed |
 
-**Score:** 2/3 pass (instance-level; not aggregate-only).
+**EXAMPLE score:** 2/3 pass (instance-level; not aggregate-only). Do not cite this as a live eval.
 
 ## Incompleteness (HELM)
 

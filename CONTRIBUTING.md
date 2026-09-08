@@ -41,7 +41,7 @@ Append a numbered instance to `suites/<suite-id>/cases.md`. Each instance states
 | **Expected** | Observable action or answer (tool name, retrieve vs tool, `path:line`, …) |
 | **Fail modes** | Wrong tool, invented args, silent no-op, finding without evidence, … |
 
-SWE-bench framing: the instance is checkable without trusting the agent's prose. For `tool-use`, follow BFCL: the correct function (and only that function), required arguments present, no call when the right tool is missing.
+SWE-bench framing: the instance is checkable without trusting the agent's prose. For `tool-use`, follow BFCL: the correct function (and only that function), required arguments present, no call when the right tool is missing. For `appsec-prompt`, score the `findings` JSON (`path` + `line`); withhold when the snippet does not prove a bug — do not invent a CWE.
 
 ## Add a rubric
 
@@ -70,7 +70,7 @@ Unknown suite:
 # exits 1: Unknown suite: not-a-suite
 ```
 
-EXAMPLE live fill (Stage 2, labeled sample numbers): [reports/tool-use-live.example.md](reports/tool-use-live.example.md). Stage 1 scaffold: [reports/tool-use-sample.md](reports/tool-use-sample.md). Optional CI: [`.github/workflows/dry-run.yml`](.github/workflows/dry-run.yml).
+EXAMPLE live fill (Stage 2, labeled sample numbers): [reports/tool-use-live.example.md](reports/tool-use-live.example.md) — EXAMPLE 3/4. Stage 1 scaffold: [reports/tool-use-sample.md](reports/tool-use-sample.md) — EXAMPLE 2/3. Optional CI: [`.github/workflows/dry-run.yml`](.github/workflows/dry-run.yml).
 
 Do not commit dated dry-run scaffolds from local runs unless they are intentional samples. Do not present EXAMPLE rows as production metrics.
 

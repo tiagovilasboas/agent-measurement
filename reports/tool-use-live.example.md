@@ -24,6 +24,15 @@ Layout mirrors [Inspect](https://inspect.aisi.org.uk/tasks.html) (dataset + solv
 
 Stage 1 scaffold (no adapter traces): [tool-use-sample.md](tool-use-sample.md).
 
+## EXAMPLE comparison (scaffold vs adapter fill)
+
+| Fill | Instances | Trajectories | EXAMPLE score |
+|---|---|---|---|
+| [tool-use-sample.md](tool-use-sample.md) (Stage 1 scaffold) | 3 | none (manual rows) | **EXAMPLE 2/3** |
+| this file (`echo` stub) | 4 | `{"calls":[...]}` | **EXAMPLE 3/4** |
+
+Same suite and rubric. The fourth instance is withhold. Neither row is a prod metric, a model bake-off, or a staging-vs-prod comparison.
+
 ## Rubric (short)
 
 See `suites/tool-use/rubric.md` at fill time:

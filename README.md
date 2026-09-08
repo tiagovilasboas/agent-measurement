@@ -22,13 +22,9 @@ Score only against `suites/<id>/rubric.md` ([Inspect](https://inspect.aisi.org.u
 ./scripts/run.sh tool-use
 ```
 
-Default solver is [`adapters/echo.sh`](adapters/echo.sh) — script stub, **no API key**, not a model. Writes `reports/tool-use-<YYYY-MM-DD>.md` with rubric, cases, and echo trajectories. Unknown suite or adapter → exit 1. Swap later: `ADAPTER=your-stub ./scripts/run.sh tool-use`.
+Same command on push/PR: [`.github/workflows/dry-run.yml`](.github/workflows/dry-run.yml) (greps `adapter: echo` + `"calls"`). Default [`adapters/echo.sh`](adapters/echo.sh) — no API key. Unknown suite or adapter → exit 1.
 
-Worked EXAMPLE fill (labeled sample numbers, not prod): [reports/tool-use-live.example.md](reports/tool-use-live.example.md) — EXAMPLE 3/4. Stage 1 scaffold: [reports/tool-use-sample.md](reports/tool-use-sample.md) — EXAMPLE 2/3.
-
-Each suite has `suites/<nome>/cases.md` (instances) and `suites/<nome>/rubric.md` (scorer). Adapter contract: [adapters/README.md](adapters/README.md).
-
-Optional CI: [`.github/workflows/dry-run.yml`](.github/workflows/dry-run.yml) runs the same command on push/PR.
+EXAMPLE fills (not prod): [live 3/4](reports/tool-use-live.example.md) · [scaffold 2/3](reports/tool-use-sample.md). Swap: `ADAPTER=your-stub ./scripts/run.sh tool-use`. Contract: [adapters/README.md](adapters/README.md).
 
 ## Related
 
@@ -39,7 +35,10 @@ Optional CI: [`.github/workflows/dry-run.yml`](.github/workflows/dry-run.yml) ru
 - [BrowserGym](https://github.com/ServiceNow/BrowserGym) + [AgentLab](https://github.com/ServiceNow/AgentLab) — ambiente + runner
 - [Winder: harness comparison](https://winder.ai/ai-agent-harness-comparison/) — harness muda o score
 
-This org: [awesome-agentic-ai](https://github.com/tiagovilasboas/awesome-agentic-ai) · [agentic-code-review](https://github.com/tiagovilasboas/agentic-code-review)
+This org:
+
+- [awesome-agentic-ai § Cost / latency / evidence](https://github.com/tiagovilasboas/awesome-agentic-ai#cost--latency--evidence) — evals as evidence; that list does not publish first-party prod numbers
+- [agentic-code-review § Start](https://github.com/tiagovilasboas/agentic-code-review#start-in-15-minutes) — AppSec `path:line` ([evidence required](https://github.com/tiagovilasboas/agentic-code-review/blob/main/guardrails/evidence-required.md); pairs with `appsec-prompt`)
 
 ## Contributing
 

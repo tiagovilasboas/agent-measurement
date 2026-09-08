@@ -10,9 +10,11 @@ Maintainer: [Tiago Montanha](https://github.com/tiagovilasboas) · Staff · Agen
 
 | Suite | Objetivo | Métrica mínima |
 |---|---|---|
-| `tool-use` | Chama a tool certa (e só ela) | pass/fail por caso |
+| `tool-use` | Chama a tool certa (e só ela) | pass/fail por caso ([BFCL](https://gorilla.cs.berkeley.edu/leaderboard.html): name, args, withhold) |
 | `rag-vs-mcp` | Recuperar vs chamar tool | decisão correta + justificativa curta |
-| `appsec-prompt` | Review não inventa achado | finding só com path:line |
+| `appsec-prompt` | Review não inventa achado | finding só com `path:line`; withhold se evidência insuficiente |
+
+Score only against `suites/<id>/rubric.md` ([Inspect](https://inspect.aisi.org.uk/) scorer). Cases are checkable instances ([SWE-bench](https://github.com/SWE-bench/SWE-bench)). This is an eval harness — not a HITL review queue.
 
 ## Dry-run
 
@@ -22,7 +24,7 @@ Maintainer: [Tiago Montanha](https://github.com/tiagovilasboas) · Staff · Agen
 
 Default solver is [`adapters/echo.sh`](adapters/echo.sh) — script stub, **no API key**, not a model. Writes `reports/tool-use-<YYYY-MM-DD>.md` with rubric, cases, and echo trajectories. Unknown suite or adapter → exit 1. Swap later: `ADAPTER=your-stub ./scripts/run.sh tool-use`.
 
-Worked EXAMPLE fill (labeled sample numbers, not prod): [reports/tool-use-live.example.md](reports/tool-use-live.example.md). Stage 1 scaffold: [reports/tool-use-sample.md](reports/tool-use-sample.md).
+Worked EXAMPLE fill (labeled sample numbers, not prod): [reports/tool-use-live.example.md](reports/tool-use-live.example.md) — EXAMPLE 3/4. Stage 1 scaffold: [reports/tool-use-sample.md](reports/tool-use-sample.md) — EXAMPLE 2/3.
 
 Each suite has `suites/<nome>/cases.md` (instances) and `suites/<nome>/rubric.md` (scorer). Adapter contract: [adapters/README.md](adapters/README.md).
 

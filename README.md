@@ -11,7 +11,7 @@ Maintainer: [Tiago Montanha](https://github.com/tiagovilasboas) · Staff · Agen
 | Suite | Objetivo | Métrica mínima |
 |---|---|---|
 | `tool-use` | Chama a tool certa (e só ela) | pass/fail por caso ([BFCL](https://gorilla.cs.berkeley.edu/leaderboard.html): name, args, withhold) |
-| `rag-vs-mcp` | Recuperar vs chamar tool | decisão correta + justificativa curta |
+| `rag-vs-mcp` | Decisão **retrieve vs tool-call** (corpus estático vs estado live/MCP) | path + justificativa; ver [docs/decision-rag-vs-mcp.md](docs/decision-rag-vs-mcp.md) |
 | `appsec-prompt` | Review não inventa achado | finding só com `path:line`; withhold se evidência insuficiente |
 
 Score only against `suites/<id>/rubric.md` ([Inspect](https://inspect.aisi.org.uk/) scorer). Cases are checkable instances ([SWE-bench](https://github.com/SWE-bench/SWE-bench)). This is an eval harness — not a HITL review queue.
@@ -19,12 +19,13 @@ Score only against `suites/<id>/rubric.md` ([Inspect](https://inspect.aisi.org.u
 ## Dry-run
 
 ```bash
+./scripts/run.sh rag-vs-mcp
 ./scripts/run.sh tool-use
 ```
 
-Same command on push/PR: [`.github/workflows/dry-run.yml`](.github/workflows/dry-run.yml) (greps `adapter: echo` + `"calls"`). Default [`adapters/echo.sh`](adapters/echo.sh) — no API key. Unknown suite or adapter → exit 1.
+Same commands on push/PR: [`.github/workflows/dry-run.yml`](.github/workflows/dry-run.yml) (echo + `"calls"` / no fixtures). Default [`adapters/echo.sh`](adapters/echo.sh) — no API key. Unknown suite or adapter → exit 1.
 
-EXAMPLE fills (not prod): [live 3/4](reports/tool-use-live.example.md) · [scaffold 2/3](reports/tool-use-sample.md). Swap: `ADAPTER=your-stub ./scripts/run.sh tool-use`. Contract: [adapters/README.md](adapters/README.md).
+Retrieve vs tool-call: `rag-vs-mcp` ([docs/decision-rag-vs-mcp.md](docs/decision-rag-vs-mcp.md)). EXAMPLE fills (not prod): [live 3/4](reports/tool-use-live.example.md) · [scaffold 2/3](reports/tool-use-sample.md). Swap: `ADAPTER=your-stub ./scripts/run.sh rag-vs-mcp`. Contract: [adapters/README.md](adapters/README.md).
 
 ## Related
 

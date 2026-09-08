@@ -17,6 +17,7 @@ suites/<suite-id>/
   rubric.md   # scorer — pass/fail (or the named metric) and fail modes
 adapters/     # solver stubs (`echo.sh` by default — no API key)
 scripts/run.sh
+docs/         # optional depth (retrieve vs tool: decision-rag-vs-mcp.md)
 reports/      # dry-run output + EXAMPLE fills (not prod metrics)
 ```
 
@@ -39,16 +40,16 @@ Append a numbered instance to `suites/<suite-id>/cases.md`. Each instance states
 |---|---|
 | **Given** | Prompt / context the agent sees |
 | **Expected** | Observable action or answer (tool name, retrieve vs tool, `path:line`, …) |
-| **Fail modes** | Wrong tool, invented args, silent no-op, finding without evidence, … |
+| **Fail modes** | Wrong tool, invented args, silent no-op, stale retrieve, finding without evidence, … |
 
-SWE-bench framing: the instance is checkable without trusting the agent's prose. For `tool-use`, follow BFCL: the correct function (and only that function), required arguments present, no call when the right tool is missing. For `appsec-prompt`, score the `findings` JSON (`path` + `line`); withhold when the snippet does not prove a bug — do not invent a CWE.
+SWE-bench framing: the instance is checkable without trusting the agent's prose. For `tool-use`, follow BFCL: the correct function (and only that function), required arguments present, no call when the right tool is missing. For `rag-vs-mcp`, score the decision JSON (`path` + `doc`/`name`; `assumption` when ambiguous) — retrieve a static corpus fact, call a live tool for volatile state; do not treat RAG prose as the score. For `appsec-prompt`, score the `findings` JSON (`path` + `line`); withhold when the snippet does not prove a bug — do not invent a CWE.
 
 ## Add a rubric
 
 `rubric.md` is the Inspect **scorer**. It must answer:
 
 - What is a **pass** (and the named metric — usually pass/fail per instance)?
-- What is a **fail** (wrong tool, missing justification, finding without `path:line`, …)?
+- What is a **fail** (wrong tool, stale retrieve, missing justification, finding without `path:line`, …)?
 - What this suite **does not** measure (HELM incompleteness — latency, cost, multi-turn, … stay out unless the rubric names them).
 
 Keep scoring deterministic. Do not hide extra credit in the notes column.
@@ -58,10 +59,11 @@ Keep scoring deterministic. Do not hide extra credit in the notes column.
 The runner writes a report scaffold via `adapters/${ADAPTER:-echo}.sh`. It does **not** call a paid model.
 
 ```bash
+./scripts/run.sh rag-vs-mcp
 ./scripts/run.sh tool-use
 ```
 
-Replace `tool-use` with any suite id. Success: `Wrote reports/<suite-id>-<YYYY-MM-DD>.md` containing Rubric, Cases, adapter trajectories (tool-use), and an empty Results table.
+Replace the id with any suite. Success: `Wrote reports/<suite-id>-<YYYY-MM-DD>.md` containing Rubric, Cases, adapter output (`tool-use` trajectories; `rag-vs-mcp` has no echo fixtures), and an empty Results table. Retrieve vs tool-call: [docs/decision-rag-vs-mcp.md](docs/decision-rag-vs-mcp.md).
 
 Unknown suite:
 
@@ -80,7 +82,7 @@ After a real agent run, fill Results **per instance** (HELM: no aggregate-only s
 
 | Case | Result | Notes |
 |------|--------|-------|
-| 1. … | pass/fail | evidence (tool called, `path:line`, …) |
+| 1. … | pass/fail | evidence (tool called, retrieve vs tool, `path:line`, …) |
 
 State model, harness, and date in the report header when you fill it. A headline % without rows is not a report. Name incompleteness (latency, cost, multi-turn, …) when the suite does not measure them.
 

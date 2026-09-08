@@ -17,7 +17,7 @@ Layout mirrors [Inspect](https://inspect.aisi.org.uk/tasks.html) (dataset + solv
 
 ## How to replace this file with a real run
 
-1. Keep or swap the solver: default `./scripts/run.sh tool-use` (echo, no key), or `ADAPTER=your-stub ./scripts/run.sh tool-use` once `adapters/your-stub.sh` exists.
+1. Keep or swap the solver: default `./scripts/run.sh tool-use` (echo, no key), or `ADAPTER=fixture ./scripts/run.sh tool-use` (local JSON, no key). Any other `adapters/<name>.sh` uses the same contract.
 2. Open the dated file `reports/tool-use-<YYYY-MM-DD>.md`.
 3. Score **each** `{"calls":[...]}` block with `suites/tool-use/rubric.md` (worked examples are in that file).
 4. Replace the Results table and the header fields above. Delete the word EXAMPLE. Do not copy these 3/4 numbers into a “live” report.

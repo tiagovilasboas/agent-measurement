@@ -1,0 +1,50 @@
+{
+  "instances": [
+    {
+      "id": "1",
+      "title": "Single correct tool",
+      "prompt": "What's the weather in Lisbon?",
+      "tools": "get_weather",
+      "note": "EXAMPLE fixture: city token → get_weather only",
+      "json": {
+        "calls": [
+          {
+            "name": "get_weather",
+            "arguments": { "city": "Lisbon" }
+          }
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Refuse wrong tool",
+      "prompt": "What's the weather in Lisbon?",
+      "tools": "get_weather, send_email",
+      "note": "EXAMPLE fixture: get_weather only; send_email withheld",
+      "json": {
+        "calls": [
+          {
+            "name": "get_weather",
+            "arguments": { "city": "Lisbon" }
+          }
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Missing args",
+      "prompt": "What's the weather?",
+      "tools": "get_weather",
+      "note": "EXAMPLE fixture: fail-closed (unlike echo, which invents city=London)",
+      "json": { "calls": [] }
+    },
+    {
+      "id": "4",
+      "title": "Withhold — no valid tool",
+      "prompt": "What's the weather in Lisbon?",
+      "tools": "send_email",
+      "note": "EXAMPLE fixture: withhold when get_weather is absent",
+      "json": { "calls": [] }
+    }
+  ]
+}

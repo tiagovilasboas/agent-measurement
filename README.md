@@ -25,7 +25,7 @@ Score only against `suites/<id>/rubric.md` ([Inspect](https://inspect.aisi.org.u
 
 Same commands on push/PR: [`.github/workflows/dry-run.yml`](.github/workflows/dry-run.yml) (echo + `"calls"` / no fixtures). Default [`adapters/echo.sh`](adapters/echo.sh) — no API key. Unknown suite or adapter → exit 1.
 
-Retrieve vs tool-call: `rag-vs-mcp` ([docs/decision-rag-vs-mcp.md](docs/decision-rag-vs-mcp.md)). EXAMPLE fills (not prod): [live 3/4](reports/tool-use-live.example.md) · [scaffold 2/3](reports/tool-use-sample.md). Swap: `ADAPTER=your-stub ./scripts/run.sh rag-vs-mcp`. Contract: [adapters/README.md](adapters/README.md).
+Retrieve vs tool-call: `rag-vs-mcp` ([docs/decision-rag-vs-mcp.md](docs/decision-rag-vs-mcp.md)). EXAMPLE fills (not prod): [live 3/4](reports/tool-use-live.example.md) · [scaffold 2/3](reports/tool-use-sample.md). Optional local swap (still no key): `ADAPTER=fixture ./scripts/run.sh tool-use` or `rag-vs-mcp`. Contract: [adapters/README.md](adapters/README.md).
 
 ## Related
 

@@ -15,7 +15,7 @@ Quality bar (layout and reporting only; we do not vendor these harnesses):
 suites/<suite-id>/
   cases.md    # dataset — numbered instances
   rubric.md   # scorer — pass/fail (or the named metric) and fail modes
-adapters/     # solver stubs (`echo.sh` by default — no API key)
+adapters/     # solver stubs (`echo.sh` by default; optional `fixture.sh` — no API key)
 scripts/run.sh
 docs/         # optional depth (retrieve vs tool: decision-rag-vs-mcp.md)
 reports/      # dry-run output + EXAMPLE fills (not prod metrics)
@@ -30,7 +30,7 @@ reports/      # dry-run output + EXAMPLE fills (not prod metrics)
 3. Dry-run the new id (see below).
 4. Open a PR using `.github/PULL_REQUEST_TEMPLATE.md`. Use the [Add suite](/.github/ISSUE_TEMPLATE/add-suite.yml) issue form when you want discussion first.
 
-A suite stays **tiny**: a handful of instances, one explicit metric. The default adapter is the in-repo `echo` stub; adapters that call a paid model stay out of this repo unless they are key-free stubs.
+A suite stays **tiny**: a handful of instances, one explicit metric. The default adapter is the in-repo `echo` stub; `fixture` is an optional local JSON runner (`ADAPTER=fixture`). Adapters that call a paid model stay out of this repo unless they are key-free stubs.
 
 ## Add a case
 
@@ -61,9 +61,10 @@ The runner writes a report scaffold via `adapters/${ADAPTER:-echo}.sh`. It does 
 ```bash
 ./scripts/run.sh rag-vs-mcp
 ./scripts/run.sh tool-use
+ADAPTER=fixture ./scripts/run.sh rag-vs-mcp   # local JSON fixtures; no API key
 ```
 
-Replace the id with any suite. Success: `Wrote reports/<suite-id>-<YYYY-MM-DD>.md` containing Rubric, Cases, adapter output (`tool-use` trajectories; `rag-vs-mcp` has no echo fixtures), and an empty Results table. Retrieve vs tool-call: [docs/decision-rag-vs-mcp.md](docs/decision-rag-vs-mcp.md).
+Replace the id with any suite. Success: `Wrote reports/<suite-id>-<YYYY-MM-DD>.md` containing Rubric, Cases, adapter output (`echo` has `tool-use` trajectories and no `rag-vs-mcp` fixtures; `fixture` has canned JSON for all three suites), and an empty Results table. Retrieve vs tool-call: [docs/decision-rag-vs-mcp.md](docs/decision-rag-vs-mcp.md). Default CI stays on `echo`.
 
 Unknown suite:
 

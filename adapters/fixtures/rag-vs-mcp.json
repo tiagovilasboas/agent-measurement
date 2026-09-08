@@ -1,0 +1,36 @@
+{
+  "instances": [
+    {
+      "id": "1",
+      "title": "Static fact in corpus",
+      "note": "EXAMPLE fixture: retrieve handbook-pto (not a live tool)",
+      "json": {
+        "path": "retrieve",
+        "doc": "handbook-pto",
+        "justification": "Accrual is a static handbook fact; live PR/calendar tools cannot answer it."
+      }
+    },
+    {
+      "id": "2",
+      "title": "Live state",
+      "note": "EXAMPLE fixture: list_open_prs (dated README is not truth)",
+      "json": {
+        "path": "tool",
+        "name": "list_open_prs",
+        "justification": "\"Right now\" needs a live count; the README claim is from 2024."
+      }
+    },
+    {
+      "id": "3",
+      "title": "Ambiguous",
+      "note": "EXAMPLE fixture: assumption stated, then retrieve deploy-runbook",
+      "json": {
+        "path": "ambiguous",
+        "assumption": "The user wants the written procedure, not whether prod is green.",
+        "chosen": "retrieve",
+        "doc": "deploy-runbook",
+        "justification": "The runbook describes how we deploy."
+      }
+    }
+  ]
+}

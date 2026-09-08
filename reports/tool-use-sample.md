@@ -3,7 +3,7 @@
 > **EXAMPLE / SAMPLE DATA — not a production run.**
 > Numbers below are an illustrative Stage 1 fill. They are **not** live prod metrics.
 
-Stage 1 scaffold example (3 instances, no adapter traces). For the Stage 2 EXAMPLE live fill (`echo` stub + instance 4), see [tool-use-live.example.md](tool-use-live.example.md).
+Stage 1 scaffold example (3 instances, no adapter traces). EXAMPLE comparison of fill *shape* (not a prod score): [tool-use-live.example.md](tool-use-live.example.md) — same suite, adapter traces, EXAMPLE 3/4.
 
 | Field | Value |
 |---|---|

@@ -35,10 +35,13 @@ EXAMPLE fills (not prod): [live 3/4](reports/tool-use-live.example.md) · [scaff
 - [BrowserGym](https://github.com/ServiceNow/BrowserGym) + [AgentLab](https://github.com/ServiceNow/AgentLab) — ambiente + runner
 - [Winder: harness comparison](https://winder.ai/ai-agent-harness-comparison/) — harness muda o score
 
-This org:
+This org (kits, not prod scores from this harness):
 
 - [awesome-agentic-ai § Cost / latency / evidence](https://github.com/tiagovilasboas/awesome-agentic-ai#cost--latency--evidence) — evals as evidence; that list does not publish first-party prod numbers
 - [agentic-code-review § Start](https://github.com/tiagovilasboas/agentic-code-review#start-in-15-minutes) — AppSec `path:line` ([evidence required](https://github.com/tiagovilasboas/agentic-code-review/blob/main/guardrails/evidence-required.md); pairs with `appsec-prompt`)
+- [jarvis-architecture ADR 0005](https://github.com/tiagovilasboas/jarvis-architecture/blob/main/docs/adr/0005-ops-owns-reconstruction.md) — ops is the measurement plane ([eval-red](https://github.com/tiagovilasboas/jarvis-architecture/blob/main/docs/cookbook-handoff.md#ops-failure)); score here, not in a host HUD
+- [kiro-crew § Start](https://github.com/tiagovilasboas/kiro-crew#start) — Reviewer `path:line` or LGTM; Ops records CI (not a suite score)
+- [grok-bot-architecture token economy](https://github.com/tiagovilasboas/grok-bot-architecture/blob/main/docs/token-economy.md) — no first-party prod numbers; [Obs](https://github.com/tiagovilasboas/grok-bot-architecture/blob/main/docs/crew/roles.md#obs) traces/evals point here
 
 ## Contributing
 

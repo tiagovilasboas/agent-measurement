@@ -8,6 +8,7 @@ Thin map for coding agents. Humans: [CONTRIBUTING.md](CONTRIBUTING.md).
 suites/<suite-id>/cases.md           # dataset (instances)
 suites/<suite-id>/rubric.md          # scorer (pass/fail + incompleteness)
 adapters/echo.sh                     # default solver stub (no API key)
+adapters/fixture.sh                  # optional local fixture runner (no API key)
 scripts/run.sh                       # cases → adapter → reports/<suite-id>-<date>.md
 docs/decision-rag-vs-mcp.md          # retrieve vs tool-call (rag-vs-mcp)
 reports/tool-use-live.example.md     # EXAMPLE filled live-style report (Stage 2)
@@ -21,10 +22,11 @@ Existing ids: `tool-use`, `rag-vs-mcp` (retrieve vs tool), `appsec-prompt`.
 ```bash
 ./scripts/run.sh rag-vs-mcp
 ./scripts/run.sh tool-use
-# ADAPTER=echo ./scripts/run.sh rag-vs-mcp   # same default
+# ADAPTER=echo ./scripts/run.sh rag-vs-mcp      # same default
+# ADAPTER=fixture ./scripts/run.sh rag-vs-mcp   # local JSON fixtures; no API key
 ```
 
-Writes rubric + cases + adapter trajectories. Does not call a paid model. Unknown suite or adapter → exit 1.
+Writes rubric + cases + adapter trajectories. Does not call a paid model. Default CI stays on `echo`. Unknown suite or adapter → exit 1.
 
 Optional CI: `.github/workflows/dry-run.yml`.
 

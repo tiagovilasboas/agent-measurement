@@ -30,13 +30,13 @@ Full Given / Expected / fail modes: [`suites/rag-vs-mcp/cases.md`](../suites/rag
 
 Default solver is `adapters/echo.sh`. It emits **no** canned trajectories for this suite (`No script fixtures…`) so a score is not implied. CI runs the same command (see [`.github/workflows/dry-run.yml`](../.github/workflows/dry-run.yml)). Unknown suite → exit 1.
 
-Swap a real stub later (still no keys in this repo):
+Optional local swap (still no keys — not the CI default):
 
 ```bash
-ADAPTER=your-stub ./scripts/run.sh rag-vs-mcp
+ADAPTER=fixture ./scripts/run.sh rag-vs-mcp
 ```
 
-`adapters/your-stub.sh` must print one decision JSON per instance (`path` + `doc`/`name`/`assumption` as in `cases.md`). Extra keys ignored.
+`adapters/fixture.sh` prints one EXAMPLE decision JSON per instance from `adapters/fixtures/rag-vs-mcp.json` (`path` + `doc`/`name`/`assumption` as in `cases.md`). Extra keys ignored. Not a paid-model score. Any other `adapters/<name>.sh` uses the same stdout contract.
 
 ## EXAMPLE fill (not prod)
 

@@ -1,0 +1,29 @@
+{
+  "instances": [
+    {
+      "id": "1",
+      "title": "Real IDOR",
+      "note": "EXAMPLE fixture: one finding at path:line (the query)",
+      "json": {
+        "findings": [
+          { "path": "src/orders.py", "line": 3 }
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Clean CRUD",
+      "note": "EXAMPLE fixture: no finding (AuthZ is visible)",
+      "json": { "findings": [] }
+    },
+    {
+      "id": "3",
+      "title": "Vague smell",
+      "note": "EXAMPLE fixture: withhold — insufficient evidence",
+      "json": {
+        "findings": [],
+        "insufficient_evidence": true
+      }
+    }
+  ]
+}

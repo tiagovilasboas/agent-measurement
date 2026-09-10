@@ -10,10 +10,10 @@ adapters/<name>.sh <suite-id>
 
 | | Rule |
 |---|---|
-| **argv** | Exactly one positional: the suite id (`tool-use`, `rag-vs-mcp`, `appsec-prompt`). |
+| **argv** | Exactly one positional: the suite id (`tool-use`, `rag-vs-mcp`, `appsec-prompt`, `appsec-withhold`). |
 | **stdin** | Unused. Do not read the user prompt from stdin. |
 | **stdout** | Markdown only. Start with `adapter:`, `kind:`, `suite:` lines. Then either `## Trajectories` + one fenced JSON object per instance, or a single “no fixtures” line. |
-| **JSON** | Shape is suite-owned. Extra keys ignored. `tool-use`: `{"calls":[...]}`. `appsec-prompt`: `{"findings":[...]}`. `rag-vs-mcp`: `{"path":"retrieve"|"tool"|"ambiguous",...}` — see each suite’s `cases.md`. |
+| **JSON** | Shape is suite-owned. Extra keys ignored. `tool-use`: `{"calls":[...]}`. `appsec-prompt`: `{"findings":[...]}`. `appsec-withhold`: `{"action":"withhold","leaked":[]}`. `rag-vs-mcp`: `{"path":"retrieve"|"tool"|"ambiguous",...}` — see each suite’s `cases.md`. |
 | **stderr** | Usage / errors only. The runner captures **stdout** into the report, not stderr. |
 | **exit** | `0` if the suite id was accepted (including “no fixtures”). Non-zero if the id is missing (`echo` uses `2` for `-h` / empty argv). |
 | **env** | None required. Do not read API keys. `scripts/run.sh` sets `ADAPTER`; the script itself must not require secrets. |
@@ -41,6 +41,7 @@ Optional local fixture runner. Reads `adapters/fixtures/<suite-id>.json` (python
 ADAPTER=fixture ./scripts/run.sh tool-use
 ADAPTER=fixture ./scripts/run.sh rag-vs-mcp
 ADAPTER=fixture ./scripts/run.sh appsec-prompt
+ADAPTER=fixture ./scripts/run.sh appsec-withhold
 ```
 
 | Suite | What stdout contains |
@@ -48,6 +49,7 @@ ADAPTER=fixture ./scripts/run.sh appsec-prompt
 | `tool-use` | Four `{"calls":[...]}` rows from `fixtures/tool-use.json`. Instance 3 is fail-closed (unlike `echo`, which invents `city=London`). |
 | `rag-vs-mcp` | Three decision objects (`path` + `doc`/`name`/`assumption`) from `fixtures/rag-vs-mcp.json`. |
 | `appsec-prompt` | Three `{"findings":[...]}` rows from `fixtures/appsec-prompt.json` (instance 3 sets `insufficient_evidence`). |
+| `appsec-withhold` | Three `{"action":"withhold","leaked":[]}` rows from `fixtures/appsec-withhold.json` (CI requires this file). |
 | any other | Same “no fixtures” line as `echo`, then exit 0. |
 
 Canned rows match the rubric **pass** shapes so peers can see a second solver path. They are still EXAMPLE data — score the JSON against `rubric.md`; do not treat `ADAPTER=fixture` as a prod score. Missing `python3` → exit 1 (default `echo` does not need it).

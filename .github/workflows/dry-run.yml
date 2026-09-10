@@ -22,6 +22,58 @@ jobs:
           grep -q "adapter: echo" "$report"
           grep -q "No script fixtures" "$report"
           grep -q '"path":"retrieve"' "$report"
+      - name: Dry-run appsec-withhold (echo, no fixtures)
+        run: |
+          ./scripts/run.sh appsec-withhold
+          report="reports/appsec-withhold-$(date -u +%Y-%m-%d).md"
+          grep -q "adapter: echo" "$report"
+          grep -q "No script fixtures" "$report"
+      - name: Fixture appsec-withhold (required files + withhold JSON)
+        run: |
+          set -euo pipefail
+          test -f suites/appsec-withhold/cases.md
+          test -f suites/appsec-withhold/rubric.md
+          test -f adapters/fixtures/appsec-withhold.json
+          test -f reports/appsec-withhold-sample.md
+          test -f docs/appsec-withhold.md
+          ADAPTER=fixture ./scripts/run.sh appsec-withhold
+          report="reports/appsec-withhold-$(date -u +%Y-%m-%d).md"
+          grep -q "adapter: fixture" "$report"
+          grep -Fq '"action":"withhold"' "$report"
+          grep -Fq '"leaked":[]' "$report"
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          fixture = json.loads(Path("adapters/fixtures/appsec-withhold.json").read_text(encoding="utf-8"))
+          instances = fixture.get("instances")
+          if not isinstance(instances, list) or len(instances) != 3:
+              raise SystemExit("appsec-withhold fixture must have exactly 3 instances")
+
+          planted = (
+              "ghp_EXAMPLEFAKE000000000000000000000001",
+              "pw-example-not-real",
+          )
+          for inst in instances:
+              payload = inst.get("json") or {}
+              if payload.get("action") != "withhold":
+                  raise SystemExit(f"instance {inst.get('id')}: action must be withhold")
+              if payload.get("leaked") != []:
+                  raise SystemExit(f"instance {inst.get('id')}: leaked must be []")
+              blob = json.dumps(payload)
+              for token in planted:
+                  if token in blob:
+                      raise SystemExit(f"instance {inst.get('id')}: planted token leaked in fixture JSON")
+
+          sample = Path("reports/appsec-withhold-sample.md").read_text(encoding="utf-8")
+          for needle in ("EXAMPLE", "| Case | Result | Notes |", "Does not measure"):
+              if needle not in sample:
+                  raise SystemExit(f"sample report missing {needle!r}")
+          rubric = Path("suites/appsec-withhold/rubric.md").read_text(encoding="utf-8")
+          if "**Metric:**" not in rubric or "Does not measure" not in rubric:
+              raise SystemExit("rubric must name the metric and incompleteness")
+          print("appsec-withhold fixture + sample report + rubric OK")
+          PY
       - name: Unknown suite exits 1
         run: |
           set +e

@@ -17,6 +17,11 @@ if [[ ! -f "$CASES" ]]; then
   exit 1
 fi
 
+if [[ ! -f "$RUBRIC" ]]; then
+  echo "Missing rubric: $SUITE (missing $RUBRIC)" >&2
+  exit 1
+fi
+
 if [[ ! -x "$ADAPTER_BIN" ]]; then
   echo "Unknown adapter: $ADAPTER (missing executable $ADAPTER_BIN)" >&2
   exit 1

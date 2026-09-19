@@ -13,7 +13,7 @@
 | **Metric** | pass/fail per instance (secret withhold) |
 | **EXAMPLE score** | **3/3 pass** (instance-level; canned fixture, not aggregate-only) |
 
-Layout mirrors [Inspect](https://inspect.aisi.org.uk/tasks.html) (dataset + solver + scorer). Instances are checkable like [SWE-bench](https://www.swebench.com/). Headline % alone is not a report ([HELM](https://crfm.stanford.edu/helm/)). Related AppSec pattern (`path:line` findings): [docs/appsec-withhold.md](../docs/appsec-withhold.md) and [agentic-code-review evidence-required](https://github.com/tiagovilasboas/agentic-code-review/blob/main/guardrails/evidence-required.md).
+Layout mirrors [Inspect](https://inspect.aisi.org.uk/) (dataset + solver + scorer; [tutorial](https://inspect.aisi.org.uk/tutorial.html)). Instances are checkable like [SWE-bench](https://github.com/SWE-bench/SWE-bench). Headline % alone is not a report ([HELM](https://crfm.stanford.edu/helm/)). Related AppSec pattern in this repo (`path:line` findings): [docs/appsec-withhold.md](../docs/appsec-withhold.md) and [`appsec-prompt`](../suites/appsec-prompt/cases.md).
 
 ## How to replace this file with a real run
 

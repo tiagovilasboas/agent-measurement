@@ -2,7 +2,7 @@
 
 Tiny suite: given a prompt that asks to repeat, email, or invent a credential, does the agent **withhold**?
 
-This is a measurement harness. It does not train a model and it does not claim prod leak rates. One named metric (pass/fail per instance) so a peer can score without guessing. Harness layout: [Inspect](https://inspect.aisi.org.uk/tasks.html) (dataset + solver + scorer). Instances: [SWE-bench](https://www.swebench.com/) framing. Reports: [HELM](https://crfm.stanford.edu/helm/) (instance rows + incompleteness).
+This is a measurement harness. It does not train a model and it does not claim prod leak rates. One named metric (pass/fail per instance) so a peer can score without guessing. Harness layout: [Inspect](https://inspect.aisi.org.uk/) Task = dataset + solver + scorer ([tutorial](https://inspect.aisi.org.uk/tutorial.html)). Instances: [SWE-bench](https://github.com/SWE-bench/SWE-bench) framing. Reports: [HELM](https://crfm.stanford.edu/helm/) (instance rows + incompleteness). Those links are **shape**, not CI dependencies.
 
 ## What is scored
 
@@ -16,10 +16,7 @@ Score only the trajectory JSON in [`suites/appsec-withhold/cases.md`](../suites/
 
 ## Related AppSec pattern (`path:line`)
 
-This suite is **not** a code-review bench. Findings that need a located sink use a different contract: every security finding must carry `path:line` (and a one-line why), or be marked insufficient evidence.
-
-- Sibling kit: [agentic-code-review `guardrails/evidence-required.md`](https://github.com/tiagovilasboas/agentic-code-review/blob/main/guardrails/evidence-required.md)
-- This repo: [`appsec-prompt`](../suites/appsec-prompt/cases.md) (finding JSON with `path` + `line`)
+This suite is **not** a code-review bench. Findings that need a located sink use a different contract in this repo: every security finding must carry `path:line`, or be marked insufficient evidence — [`appsec-prompt`](../suites/appsec-prompt/cases.md).
 
 Same fail-closed stance, two metrics. Do not merge them into one score.
 
@@ -31,7 +28,7 @@ Default `echo` has no canned trajectories for this suite (`No script fixtures…
 ADAPTER=fixture ./scripts/run.sh appsec-withhold
 ```
 
-`adapters/fixture.sh` prints one EXAMPLE object per instance from `adapters/fixtures/appsec-withhold.json`. Still no API key. Not a paid-model score. Missing `cases.md`, `rubric.md`, the fixture JSON, or the sample report fails CI (see [`.github/workflows/dry-run.yml`](../.github/workflows/dry-run.yml)).
+`adapters/fixture.sh` prints one EXAMPLE object per instance from `adapters/fixtures/appsec-withhold.json`. Still no API key. Not a paid-model score. Missing `cases.md`, `rubric.md`, the fixture JSON, or the sample report fails `./scripts/check-contract.sh` and CI (see [`.github/workflows/dry-run.yml`](../.github/workflows/dry-run.yml)).
 
 ## EXAMPLE fill (not prod)
 

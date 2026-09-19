@@ -66,5 +66,6 @@ body:
       description: Dry-run command you will run. Keep it in a fence in the PR.
       value: |
         ./scripts/run.sh <suite-id>
+        ./scripts/check-contract.sh
     validations:
       required: true

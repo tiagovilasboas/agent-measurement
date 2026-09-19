@@ -19,7 +19,7 @@ adapters/<name>.sh <suite-id>
 | **env** | None required. Do not read API keys. `scripts/run.sh` sets `ADAPTER`; the script itself must not require secrets. |
 | **default** | `echo` — script stub, **no API key**, not a model. |
 
-`scripts/run.sh` invokes `$ROOT/adapters/${ADAPTER:-echo}.sh "$SUITE"`. Default CI stays on `echo` (no secrets). Swap locally with `ADAPTER=fixture ./scripts/run.sh <suite-id>` or any `adapters/<name>.sh` that is executable. Unknown adapter path → runner exit 1. Do not put API keys in this repo. A later `rag-vs-mcp` stub may call a real retriever or MCP server **outside** this repo — stdout must still be the suite JSON. Do not vendor an MCP SDK, RAG host, or model client here.
+`scripts/run.sh` invokes `$ROOT/adapters/${ADAPTER:-echo}.sh "$SUITE"`. Default CI stays on `echo` (no secrets). Gated suites (`rag-vs-mcp`, `appsec-withhold`) also run `ADAPTER=fixture` so the JSON contract is present. Swap locally with `ADAPTER=fixture ./scripts/run.sh <suite-id>` or any `adapters/<name>.sh` that is executable. Unknown adapter path → runner exit 1. Missing `cases.md` or `rubric.md` → runner exit 1. `./scripts/check-contract.sh` fails closed if a gated fixture or sample report is missing. Do not put API keys in this repo. A later `rag-vs-mcp` stub may call a real retriever or MCP server **outside** this repo — stdout must still be the suite JSON. Do not vendor an MCP SDK, RAG host, or model client here.
 
 Canned stub output is **EXAMPLE** data — not a paid-model score, not prod metrics.
 

@@ -10,8 +10,10 @@ suites/<suite-id>/rubric.md          # scorer (pass/fail + incompleteness)
 adapters/echo.sh                     # default solver stub (no API key)
 adapters/fixture.sh                  # optional local fixture runner (no API key)
 scripts/run.sh                       # cases → adapter → reports/<suite-id>-<date>.md
+scripts/check-contract.sh            # fail closed if rubric/cases/(gated) fixture/sample missing
 docs/decision-rag-vs-mcp.md          # retrieve vs tool-call (rag-vs-mcp)
 docs/appsec-withhold.md              # secret withhold vs path:line review
+reports/rag-vs-mcp-sample.md         # EXAMPLE Staff-dense fixture fill (retrieve vs tool)
 reports/tool-use-live.example.md     # EXAMPLE filled live-style report (Stage 2)
 reports/tool-use-sample.md           # Stage 1 scaffold example
 reports/appsec-withhold-sample.md    # EXAMPLE fixture fill (secret withhold)
@@ -27,9 +29,12 @@ Existing ids: `tool-use`, `rag-vs-mcp` (retrieve vs tool), `appsec-prompt`, `app
 # ADAPTER=echo ./scripts/run.sh rag-vs-mcp      # same default
 # ADAPTER=fixture ./scripts/run.sh rag-vs-mcp   # local JSON fixtures; no API key
 # ADAPTER=fixture ./scripts/run.sh appsec-withhold
+./scripts/check-contract.sh
 ```
 
-Writes rubric + cases + adapter trajectories. Does not call a paid model. Default CI stays on `echo` except `appsec-withhold` (fixture required; missing cases/rubric/fixture/sample report fails CI). Unknown suite or adapter → exit 1.
+Writes rubric + cases + adapter trajectories. Does not call a paid model. Default CI stays on `echo` except gated suites (`rag-vs-mcp`, `appsec-withhold`: fixture + sample required; missing cases/rubric/fixture/sample report fails CI). Unknown suite, missing rubric, or unknown adapter → exit 1.
+
+Expected FAIL (CI asserts exit 1): `./scripts/run.sh not-a-suite`; hide a gated `rubric.md` and re-run; hide a gated sample report and run `check-contract.sh`.
 
 Optional CI: `.github/workflows/dry-run.yml`.
 
@@ -42,6 +47,7 @@ Optional CI: `.github/workflows/dry-run.yml`.
 - appsec-withhold: withhold secrets from the prompt (`action=withhold`, empty `leaked`).
 - Name what the suite does not measure (HELM).
 - Prefer web refs to Inspect / SWE-bench / BFCL / HELM over inventing frameworks.
+- Keep README standalone: Purpose, Value, Run it, Limit, Official refs. No sibling-repo farm.
 
 ## Don't
 
@@ -50,3 +56,4 @@ Optional CI: `.github/workflows/dry-run.yml`.
 - Do not commit to `main`; open a PR.
 - Do not treat a headline % without instance rows as a report.
 - Do not invent live prod metrics; label EXAMPLE / sample numbers as such.
+- Do not archive this repo. It is the eval harness.

@@ -12,7 +12,7 @@ Reproducible **eval harness** for agentic systems: suites + rubrics + adapters +
 
 A suite is a tiny Inspect-shaped task: `cases.md` (dataset) + adapter (solver) + `rubric.md` (scorer). `false-green` is the suite with a keyless auto-scorer because that silent class is the one teams ship.
 
-This repo is **not** model training, **not** a HITL review product, and **not** a sibling-kit hub. It is the harness.
+This repo is **not** model training, **not** a HITL review product, and **not** a sibling-kit hub. Impact is only via **suites + adapters + reports**. It is not an AppSec CLI, not a `SKILL.md` pack, and not an architecture-schema dump.
 
 ## Value
 
@@ -81,6 +81,7 @@ On `tool-use`, default `echo` also emits a **documented instance fail**: instanc
 - A headline % without instance-level Results rows is not a report.
 - Suites do not measure latency, cost, multi-turn repair, RAG quality, or MCP SDK conformance unless a rubric names them.
 - `false-green` does not detect live production secrets — only the planted EXAMPLE tokens, so the *class* (claimed-ok + side channel) is checkable.
+- Does not ship an AppSec CLI, `SKILL.md` packs, or architecture schemas copied from other repos. `scripts/score.sh` is the Inspect scorer slot for one suite, not a scanner product.
 
 ## Official refs
 

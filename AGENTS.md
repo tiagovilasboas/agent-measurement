@@ -63,3 +63,4 @@ Optional CI: `.github/workflows/dry-run.yml`.
 - Do not treat a headline % without instance rows as a report.
 - Do not invent live prod metrics; label EXAMPLE / sample numbers as such.
 - Do not archive this repo. It is the eval harness.
+- Do not copy AppSec CLIs, `SKILL.md` packs, or architecture schemas from sibling repos. Impact stays in suites / adapters / reports.

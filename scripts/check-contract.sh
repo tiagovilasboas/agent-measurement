@@ -28,6 +28,17 @@ if grep -Eq 'tiagovilasboas/(awesome-agentic-ai|agentic-code-review|jarvis-archi
 fi
 grep -qi 'silent failure' "$README" || fail "$README must lead with the silent-failure impact"
 grep -q 'false-green' "$README" || fail "$README must name the false-green suite"
+grep -qi 'eval harness' "$README" || fail "$README must keep the eval-harness purpose"
+
+# Shape lock: harness only. No sibling product dump (CLI / SKILL packs / schemas).
+if find . -name 'SKILL.md' -not -path './.git/*' | grep -q .; then
+  fail "SKILL.md packs are out of scope (eval harness only; impact via suites/adapters/reports)"
+fi
+for dump in cli bin schemas architecture skills; do
+  if [[ -e "$dump" ]]; then
+    fail "$dump/ is out of scope (not an AppSec CLI or architecture-schema repo)"
+  fi
+done
 
 # --- Discover suites ---
 mapfile -t SUITES < <(find suites -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort)

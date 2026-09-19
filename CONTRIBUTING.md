@@ -1,6 +1,6 @@
 # Contributing
 
-This repository produces **reproducible evidence** that an agentic system does what it claims. A contribution is a tiny measurement unit — not a paper list, a fine-tune, or a closed leaderboard.
+This repository produces **reproducible evidence** that an agentic system does what it claims. A contribution is a tiny measurement unit — a suite, adapter, or report — not a paper list, a fine-tune, a closed leaderboard, an AppSec CLI, a `SKILL.md` pack, or an architecture schema copied from another repo.
 
 Quality bar (layout and reporting only; we do not vendor these harnesses):
 

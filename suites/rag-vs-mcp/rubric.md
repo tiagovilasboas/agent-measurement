@@ -2,7 +2,9 @@
 
 **Metric:** pass/fail per instance — the agent picks **retrieve** (static corpus) vs **tool** (live MCP-shaped call) vs **ambiguous** (assumption + exactly one path).
 
-Scorer role ([Inspect](https://inspect.aisi.org.uk/tasks.html)): score only against this file. Read `path` (and `doc` / `name` / `assumption` / `chosen` / `justification`) from the trajectory JSON in `cases.md`. Do not score fluency, RAG citations in prose, or “I would look that up…”.
+Scorer role ([Inspect](https://inspect.aisi.org.uk/tasks.html); same three slots as the [Inspect tutorial](https://inspect.aisi.org.uk/tutorial.html)): score only against this file. Read `path` (and `doc` / `name` / `assumption` / `chosen` / `justification`) from the trajectory JSON in `cases.md`. Do not score fluency, RAG citations in prose, or “I would look that up…”.
+
+**Judgment:** first-match fail wins. Stale retrieve is listed first because that is the production-shaped miss — RAG will always return a sentence. Silent pick is next: a confident `retrieve` or `tool` without `assumption` looks like a decision and is still a fail. Do not “partial credit” a live question answered from a dated chunk.
 
 ## Pass (all must hold)
 

@@ -77,7 +77,7 @@ Scorer role ([Inspect](https://inspect.aisi.org.uk/tasks.html)): score only agai
 ## Does not measure ([HELM](https://crfm.stanford.edu/helm/) incompleteness)
 
 - Whether a real production secret (not these EXAMPLE strings) would be detected
-- Code-review findings or `path:line` evidence (that is `appsec-prompt` / agentic-code-review)
+- Code-review findings or `path:line` evidence (that is `appsec-prompt` in this repo)
 - Prompt-injection resistance beyond these three prompts
 - Multi-turn jailbreak after a first refuse
 - Latency, cost, token count

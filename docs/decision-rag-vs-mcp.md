@@ -2,7 +2,19 @@
 
 Tiny decision suite: given a user question, a small corpus, and a small tool list, does the agent **retrieve** a static doc or **call** a live tool?
 
-This is not a RAG quality bench and not an MCP conformance test. It is one named metric (pass/fail per instance) so a peer can score without guessing. Official protocol for live tools/resources: [Model Context Protocol](https://modelcontextprotocol.io/). Harness layout: [Inspect](https://inspect.aisi.org.uk/tasks.html) (dataset + solver + scorer). Instances: [SWE-bench](https://www.swebench.com/) framing. Reports: [HELM](https://crfm.stanford.edu/helm/) — instance rows + incompleteness.
+This is not a RAG quality bench and not an MCP conformance test. It is one named metric (pass/fail per instance) so a peer can score without guessing. Official protocol for live tools/resources: [Model Context Protocol](https://modelcontextprotocol.io/). Harness layout: [Inspect](https://inspect.aisi.org.uk/) Task = dataset + solver + scorer (same three slots as the [Inspect tutorial](https://inspect.aisi.org.uk/tutorial.html)). Instances: [SWE-bench](https://github.com/SWE-bench/SWE-bench) framing. Reports: [HELM](https://crfm.stanford.edu/helm/) — instance rows + incompleteness. Those links are **shape**, not CI dependencies.
+
+## Decision
+
+Score **source of truth**, not fluency. Retrieve when the fact is in a dated/indexed corpus and does not change between index and question. Call a tool when the prompt needs volatile state. If both readings are reasonable, `path` must be `ambiguous`, the assumption must be stated, and exactly one path chosen. Silent pick is a fail even when the chosen path would have been legal.
+
+## Blast radius
+
+A stale retrieve on instance 2 (“3 open PRs” from a 2024 README) is an ops-facing number. A host that treats the index as *now* will show the wrong queue — merge pressure, skipped live check. A live tool on instance 1 cannot answer PTO accrual; the agent looks busy and is still on the wrong plane. Silent pick on instance 3 looks like confidence; the scored honesty is the assumption.
+
+## Judgment
+
+First-match fail table in [`suites/rag-vs-mcp/rubric.md`](../suites/rag-vs-mcp/rubric.md): stale retrieve, then silent pick, then wrong path. Do not partial-credit a dated chunk. Do not score assistant prose. The canned fixture is the pass-shape so the contract is checkable; the teaching fail (stale retrieve JSON) is in the rubric and in [reports/rag-vs-mcp-sample.md](../reports/rag-vs-mcp-sample.md).
 
 ## When to retrieve vs call
 
@@ -28,7 +40,7 @@ Full Given / Expected / fail modes: [`suites/rag-vs-mcp/cases.md`](../suites/rag
 ./scripts/run.sh rag-vs-mcp
 ```
 
-Default solver is `adapters/echo.sh`. It emits **no** canned trajectories for this suite (`No script fixtures…`) so a score is not implied. CI runs the same command (see [`.github/workflows/dry-run.yml`](../.github/workflows/dry-run.yml)). Unknown suite → exit 1.
+Default solver is `adapters/echo.sh`. It emits **no** canned trajectories for this suite (`No script fixtures…`) so a score is not implied. CI runs the same command (see [`.github/workflows/dry-run.yml`](../.github/workflows/dry-run.yml)). Unknown suite or missing `rubric.md` → runner exit 1. Missing cases / rubric / fixture / sample report → `./scripts/check-contract.sh` exit 1.
 
 Optional local swap (still no keys — not the CI default):
 
@@ -48,7 +60,7 @@ After a real (or stub) run, fill Results **per instance**. Numbers below are **E
 | 2. Live state | **EXAMPLE fail** / stale retrieve | Answered `3` from `readme-prs` instead of `list_open_prs` |
 | 3. Ambiguous | **EXAMPLE pass** | `path=ambiguous`, assumption stated, `chosen=retrieve` + `deploy-runbook` |
 
-**EXAMPLE score:** 2/3 pass (instance-level; not aggregate-only). Do not cite this as a live eval. Worked JSON for each fail mode lives in the rubric.
+**EXAMPLE score (docs walkthrough):** 2/3 pass (instance-level; not aggregate-only). The canned fixture itself is 3/3 pass-shape — see [reports/rag-vs-mcp-sample.md](../reports/rag-vs-mcp-sample.md) for the Staff-dense fill (decision, blast radius, judgment, and this same teaching fail). Do not cite either as a live eval. Worked JSON for each fail mode lives in the rubric.
 
 ## Does not measure
 

@@ -73,6 +73,7 @@ No other tools exist for scoring. A `name` not in **Available tools** for that i
    - **Available tools:** `list_open_prs`
    - **Expected:** `{"path":"tool","name":"list_open_prs","justification":"<non-empty>"}`. Do **not** answer `3` from stale RAG.
    - **Fail modes:** `path` = `retrieve` (including `doc` = `readme-prs`); missing/`name` ≠ `list_open_prs`; empty `justification`; silent no-op (`path` absent); inventing a second tool.
+   - **Blast radius:** quoting `3` from the 2024 README is an ops-facing number, not a citation miss. A host HUD that treats the index as *now* will show the wrong queue.
 
 3. **Ambiguous**
    - **Given (user):** `What's the deploy process?`

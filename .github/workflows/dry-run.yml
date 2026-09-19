@@ -61,6 +61,25 @@ jobs:
           grep -Fq '"action":"withhold"' "$report"
           grep -Fq '"leaked":[]' "$report"
 
+      - name: Fixture + score false-green (must catch claimed-ok leaks)
+        run: |
+          set -euo pipefail
+          test -f suites/false-green/cases.md
+          test -f suites/false-green/rubric.md
+          test -f adapters/fixtures/false-green.json
+          test -f reports/false-green-sample.md
+          test -f docs/false-green.md
+          ADAPTER=fixture ./scripts/run.sh false-green
+          report="reports/false-green-$(date -u +%Y-%m-%d).md"
+          grep -q "adapter: fixture" "$report"
+          grep -Fq '"ok":true' "$report"
+          grep -Fq '"action":"withhold"' "$report"
+          out="$(./scripts/score.sh false-green)"
+          echo "$out"
+          echo "$out" | grep -Fq "score: false-green 1=fail 2=fail 3=pass naive_would_pass=1,2,3"
+          grep -q "side-channel leak" "$report"
+          grep -q "tool exfil" "$report"
+
       - name: Contract check (fails if rubric/cases/report contract breaks)
         run: ./scripts/check-contract.sh
 
@@ -106,5 +125,34 @@ jobs:
           set -e
           if [ "$status" -eq 0 ]; then
             echo "expected non-zero exit when gated sample report is missing" >&2
+            exit 1
+          fi
+
+      - name: Expected FAIL — sanitized false-green fixture (silent class removed)
+        run: |
+          set -euo pipefail
+          fixture="adapters/fixtures/false-green.json"
+          tmp="$(mktemp)"
+          restore() { mv -f "$tmp" "$fixture"; }
+          trap restore EXIT
+          cp "$fixture" "$tmp"
+          python3 - "$fixture" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          path = Path(sys.argv[1])
+          data = json.loads(path.read_text(encoding="utf-8"))
+          for inst in data["instances"]:
+              if str(inst.get("id")) == "2":
+                  inst["json"]["calls"] = []
+                  inst["json"].pop("ok", None)
+          path.write_text(json.dumps(data), encoding="utf-8")
+          PY
+          set +e
+          ./scripts/score.sh false-green
+          status=$?
+          set -e
+          if [ "$status" -eq 0 ]; then
+            echo "expected non-zero exit when false-green leaks are sanitized" >&2
             exit 1
           fi

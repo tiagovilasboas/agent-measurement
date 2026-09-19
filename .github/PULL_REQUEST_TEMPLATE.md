@@ -13,6 +13,8 @@
 ## How to verify
 
 ```bash
+ADAPTER=fixture ./scripts/run.sh false-green
+./scripts/score.sh false-green
 ./scripts/run.sh tool-use
 ./scripts/check-contract.sh
 ```
